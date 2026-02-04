@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #ffb6c1;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 24px;
+      color: #ff1493;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      background: white;
+      padding: 35px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+      width: 300px;
+      z-index: 2;
+    }
+
+    .emoji {
+      font-size: 60px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #d63384;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 60px;
+    }
+
+    button {
+      background: #ff1493;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      position: absolute;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+    #yesBtn { left: 20px; }
+    #noBtn { right: 20px; }
+
+    .video-container {
+      display: none;
+      margin-top: 20px;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Music (use your own hosted MP3 link) -->
+  <audio id="bgMusic" loop>
+    <source src="YOUR_HOSTED_LOVE_ME_LOVE_LINK_HERE.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+    <div class="emoji">❤️</div>
+    <h1>Will you be my Valentine?</h1>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+
+    <div class="video-container" id="videoBox">
+      <video controls autoplay>
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const videoBox = document.getElementById("videoBox");
+    const music = document.getElementById("bgMusic");
+
+    document.body.addEventListener("click", () => {
+      music.play().catch(()=>{});
+    }, { once: true });
+
+    function moveNoButton() {
+      const card = document.querySelector(".card");
+      const maxX = card.clientWidth - noBtn.offsetWidth - 20;
+      const maxY = card.clientHeight - noBtn.offsetHeight - 20;
+      noBtn.style.left = Math.random() * maxX + "px";
+      noBtn.style.top = Math.random() * maxY + "px";
+    }
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random()*4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+    setInterval(createHeart, 300);
+
+    yesBtn.addEventListener("click", () => {
+      videoBox.style.display = "block";
+      music.play().catch(()=>{});
+      // Hearts POP animation
+      document.querySelectorAll('.heart').forEach(h => {
+        h.style.transform = "scale(2) rotate(20deg)";
+        h.style.opacity = 0;
+      });
+    });
+  </script>
+</body>
+  </html>
